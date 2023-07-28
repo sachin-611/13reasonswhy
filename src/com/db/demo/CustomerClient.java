@@ -21,12 +21,17 @@ public class CustomerClient {
 			int option = sc.nextInt();
 	        switch(option) {
 	            case 1:
-	            	System.out.println("Enter your name");
-	            	String name = sc.next();
-	            	System.out.println("Enter your address");
-	            	String address = sc.next();
-	            	service.createCustomer(name, address);
-	                break;
+	            	System.out.println("Enter number of customers to be added");
+	            	int no = sc.nextInt();
+	            	for(int i=0;i<no;i++)
+	            	{
+	            		System.out.println("Enter your name");
+		            	String name = sc.next();
+		            	System.out.println("Enter your address");
+		            	String address = sc.next();
+		            	service.createCustomer(name, address);
+	            	}
+	            	break;
 	            case 2:
 	            	System.out.println("Enter id");
 	            	int id = sc.nextInt();
