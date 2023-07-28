@@ -10,7 +10,6 @@ public class CustomerClient {
 		CustomerService service = new CustomerService();
 		Scanner sc = new Scanner(System.in);
 		while(true) {
-			
 			System.out.println("Menu");
 			System.out.println("1. Create Customer");
 			System.out.println("2. Update Customer");
