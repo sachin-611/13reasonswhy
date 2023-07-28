@@ -1,66 +1,61 @@
-/**
- * 
- */
+
 package com.db.service;
+import java.util.*;
 
 import com.db.bean.Customer;
 
-/**
- * 
- */
 public class CustomerService {
-	 Customer customer[] = new Customer[3];
-
-	    public void createCustomer(){
-	    	//add first record of customer
-	        customer[0] = new Customer();
-	        customer[0].setCustomerId(101);
-	        customer[0].setCustomerAddress("Delhi");
-	        customer[0].setCustomerName("Anshu");
-
-	        // add second record here
-	        customer[1] = new Customer();
-	        customer[1].setCustomerId(102);
-	        customer[1].setCustomerAddress("Mumbai");
-	        customer[1].setCustomerName("Sachin");
-	        // add third record here
-	        customer[2] = new Customer();
-	        customer[2].setCustomerId(131);
-	        customer[2].setCustomerAddress("Chennai");
-	        customer[2].setCustomerName("Roshini");
-	        
-	        System.out.println("Customer Created");
-	    }
-	public void listCustomer() {
-		System.out.println("list customer here");
-		for(Customer cust:customer) {
-			if(cust.getCustomerId()!=-1)
-			System.out.println("details of Customer records: "+ cust.getCustomerId()+"----- "+cust.getCustomerName()+"-------"+ cust.getCustomerAddress());
-			
-		}
+	
+	private int id = 100;
+	private int totalCustomers = 0;
+	private ArrayList<Customer>customer = new ArrayList<>();
+	
+	public void createCustomer(String name,String address){
+		id++;
+		totalCustomers++;
+		Customer temp = new Customer();
+		temp.setCustomerId(id);
+		temp.setCustomerName(name);
+		temp.setCustomerAddress(address);
+		customer.add(temp);
+        System.out.println("Your id is "+id);
+        System.out.println();
 	}
-	public boolean UpdateCustomer(int id) {
-		System.out.println("Customer is updated");
-		for(Customer cust:customer) {
-			if(cust.getCustomerId()==id) {
-				cust.setCustomerId(id);
-	        	cust.setCustomerAddress("RamNamagr");
-	        	cust.setCustomerName("Mukul");
+	
+	public void listCustomer(){
+		for(int i=0;i<totalCustomers;i++) {
+			System.out.println(customer.get(i).getCustomerId()+" "+customer.get(i).getCustomerName()+" "+customer.get(i).getCustomerAddress());
+		}
+		System.out.println();
+	}
+	
+	public boolean updateCustomer(int id,String name,String address){
+		for(int i=0;i<totalCustomers;i++){
+			if(customer.get(i).getCustomerId()==id)
+			{
+				customer.get(i).setCustomerName(name);
+				customer.get(i).setCustomerAddress(address);
+				System.out.println("Customer is updated");
+				System.out.println();
+				return true;
 			}
 		}
-		
-        
-		return true;
+		System.out.println("Customer id is not valid");
+		return false;
 	}
-	public boolean deleteCustomer(int id) {
-		System.out.println("Customer is deleted");
-		for(Customer cust:customer) {
-			if(cust.getCustomerId()==id) {
-				cust.setCustomerId(-1);
-	        	cust.setCustomerAddress("");
-	        	cust.setCustomerName("");
+	
+	public boolean deleteCustomer(int id){
+		for(int i=0;i<totalCustomers;i++){
+			if(customer.get(i).getCustomerId()==id)
+			{
+				customer.remove(i);
+				totalCustomers--;
+				System.out.println("Customer is deleted");
+				System.out.println();
+				return true;
 			}
 		}
-		return true;
+		System.out.println("Customer id is not valid");
+		return false;
 	}
 }
