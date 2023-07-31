@@ -1,6 +1,6 @@
-
 package com.db.service;
 import java.util.*;
+import com.db.exception.CustomerNotFound;
 
 import com.db.bean.Customer;
 
@@ -23,39 +23,43 @@ public class CustomerService {
 	}
 	
 	public void listCustomer(){
-		for(int i=0;i<totalCustomers;i++) {
-			System.out.println(customer.get(i).getCustomerId()+" "+customer.get(i).getCustomerName()+" "+customer.get(i).getCustomerAddress());
+		System.out.println("ID    NAME    ADDRESS");
+		for(Customer cust:customer) {
+			System.out.println(cust.getCustomerId()+" "+cust.getCustomerName()+" "+cust.getCustomerAddress());
 		}
 		System.out.println();
 	}
 	
-	public boolean updateCustomer(int id,String name,String address){
-		for(int i=0;i<totalCustomers;i++){
-			if(customer.get(i).getCustomerId()==id)
+	public void updateCustomer(int id) throws CustomerNotFound{
+		for(Customer cust:customer) {
+			if(cust.getCustomerId()==id)
 			{
-				customer.get(i).setCustomerName(name);
-				customer.get(i).setCustomerAddress(address);
+				Scanner sc = new Scanner(System.in);
+				System.out.println("Enter your name");
+            	String name = sc.next();
+            	System.out.println("Enter your address");
+            	String address = sc.next();
+				cust.setCustomerName(name);
+				cust.setCustomerAddress(address);
 				System.out.println("Customer is updated");
 				System.out.println();
-				return true;
+				return;
 			}
 		}
-		System.out.println("Customer id is not valid");
-		return false;
+		throw new CustomerNotFound(id);
 	}
 	
-	public boolean deleteCustomer(int id){
-		for(int i=0;i<totalCustomers;i++){
-			if(customer.get(i).getCustomerId()==id)
+	public void deleteCustomer(int id) throws CustomerNotFound{
+		for(Customer cust:customer) {
+			if(cust.getCustomerId()==id)
 			{
-				customer.remove(i);
+				customer.remove(cust);
 				totalCustomers--;
 				System.out.println("Customer is deleted");
 				System.out.println();
-				return true;
+				return;
 			}
 		}
-		System.out.println("Customer id is not valid");
-		return false;
+		throw new CustomerNotFound(id);
 	}
 }

@@ -1,5 +1,5 @@
-
 package com.db.demo;
+import com.db.exception.CustomerNotFound;
 import com.db.service.CustomerService;
 import java.util.*;
 
@@ -10,12 +10,13 @@ public class CustomerClient {
 		CustomerService service = new CustomerService();
 		Scanner sc = new Scanner(System.in);
 		while(true) {
-			System.out.println("Menu");
-			System.out.println("1. Create Customer");
-			System.out.println("2. Update Customer");
-			System.out.println("3. Delete Customer");
-			System.out.println("4. List Customer");
-			System.out.println("5. Exit");
+			
+			System.out.println("-------------Menu-------------");
+			System.out.println("1) Create Customer");
+			System.out.println("2) Update Customer");
+			System.out.println("3) Delete Customer");
+			System.out.println("4) List Customer");
+			System.out.println("5) Exit");
 			System.out.println();
 			
 			int option = sc.nextInt();
@@ -31,20 +32,27 @@ public class CustomerClient {
 		            	String address = sc.next();
 		            	service.createCustomer(name, address);
 	            	}
-	            	break;
+	                break;
 	            case 2:
 	            	System.out.println("Enter id");
 	            	int id = sc.nextInt();
-	            	System.out.println("Enter your name");
-	            	String namee = sc.next();
-	            	System.out.println("Enter your address");
-	            	String addresss = sc.next();
-	            	service.updateCustomer(id, namee, addresss);
+					try {
+						service.updateCustomer(id);
+					} catch (CustomerNotFound e) {
+						System.out.println("Sorry, but CustomerId " + e.getId() + " is invaild");
+						System.out.println();
+					}
 	                break;
 	            case 3:
 	            	System.out.println("Enter id");
 	            	int idd = sc.nextInt();
-	            	service.deleteCustomer(idd);
+	            	System.out.println();
+					try {
+						service.deleteCustomer(idd);
+					} catch (CustomerNotFound e) {
+						System.out.println("Sorry, but CustomerId " + e.getId() + " is invaild");
+						System.out.println();
+					}
 	                break;
 	            case 4:
 	            	service.listCustomer();
